@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jonathan Willian - Cartomante | Leitura de Baralho Cigano e Comum</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --roxo-principal: #4a235a;
+            --roxo-secundario: #6c3483;
+            --roxo-claro: #8e44ad;
+            --dourado: #d4af37;
+            --bege: #f5e6ca;
+            --preto: #1a1a2e;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--preto);
+            color: var(--bege);
+            background-image: url('https://cdn.oantagonista.com/uploads/2025/04/Qual-a-fases-da-Lua-hoje-1-1024x576.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 46, 0.85);
+            z-index: -1;
+        }
+        
+        .navbar-brand {
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            color: var(--dourado) !important;
+            font-size: 1.8rem;
+        }
+        
+        .nav-link {
+            color: var(--bege) !important;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--dourado) !important;
+        }
+        
+        .hero-section {
+            padding: 100px 0;
+            text-align: center;
+            background: linear-gradient(to right, rgba(74, 35, 90, 0.8), rgba(108, 52, 131, 0.7));
+            border-bottom: 3px solid var(--dourado);
+            margin-bottom: 60px;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: var(--dourado);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            margin-bottom: 20px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--bege);
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .section-title {
+            font-family: 'Cinzel', serif;
+            color: var(--dourado);
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--roxo-claro);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '✦';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--preto);
+            padding: 0 15px;
+            color: var(--dourado);
+        }
+        
+        .card {
+            background-color: rgba(74, 35, 90, 0.7);
+            border: 1px solid var(--dourado);
+            border-radius: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+        
+        .card-header {
+            background-color: var(--roxo-principal);
+            color: var(--dourado);
+            border-bottom: 1px solid var(--dourado);
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: var(--dourado);
+            margin-bottom: 15px;
+        }
+        
+        .form-container {
+            background-color: rgba(74, 35, 90, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid var(--dourado);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .form-label {
+            color: var(--bege);
+            font-weight: bold;
+        }
+        
+        .form-control, .form-select {
+            background-color: rgba(245, 230, 202, 0.1);
+            border: 1px solid var(--roxo-claro);
+            color: var(--bege);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: rgba(245, 230, 202, 0.2);
+            border-color: var(--dourado);
+            box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+            color: var(--bege);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+        }
+        
+        .btn-primary {
+            background-color: var(--roxo-secundario);
+            border-color: var(--dourado);
+            color: var(--bege);
+            font-weight: bold;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--dourado);
+            border-color: var(--dourado);
+            color: var(--preto);
+            transform: scale(1.05);
+        }
+        
+        .price-badge {
+            background-color: var(--dourado);
+            color: var(--preto);
+            font-weight: bold;
+            font-size: 1.8rem;
+            padding: 10px 25px;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            color: white;
+            transform: scale(1.05);
+            text-decoration: none;
+        }
+        
+        .footer {
+            background-color: var(--roxo-principal);
+            color: var(--bege);
+            padding: 40px 0;
+            margin-top: 80px;
+            border-top: 3px solid var(--dourado);
+        }
+        
+        .symbol {
+            font-size: 2rem;
+            color: var(--dourado);
+            margin: 0 10px;
+        }
+        
+        .tarot-card {
+            position: absolute;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .tarot-card-1 {
+            top: 10%;
+            left: 5%;
+            transform: rotate(-15deg);
+            width: 150px;
+        }
+        
+        .tarot-card-2 {
+            top: 20%;
+            right: 5%;
+            transform: rotate(15deg);
+            width: 150px;
+        }
+        
+        .tarot-card-3 {
+            bottom: 20%;
+            left: 10%;
+            transform: rotate(-10deg);
+            width: 120px;
+        }
+        
+        .tarot-card-4 {
+            bottom: 10%;
+            right: 10%;
+            transform: rotate(10deg);
+            width: 120px;
+        }
+        
+        .disclaimer {
+            font-size: 0.9rem;
+            font-style: italic;
+            text-align: center;
+            margin-top: 20px;
+            color: #aaa;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .tarot-card {
+                display: none;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: rgba(26, 26, 46, 0.95);">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-crystal-ball me-2"></i>Cavaleiro Cigano
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#inicio">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#servicos">Serviços</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sobre">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contato">Consulta</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Cavaleiro Cigano</h1>
+            <h2 class="hero-subtitle">Cartomante especializado em Leitura de Baralho Cigano e Baralho Comum</h2>
+            <p class="lead">Descubra os mistérios que o futuro reserva com uma leitura precisa e aconselhamento espiritual personalizado.</p>
+            
+            <div class="price-badge">
+                <i class="fas fa-gem me-2"></i>Consulta: R$ 30,00
+            </div>
+            
+            <p class="mt-3">Inclui leitura completa e conselho espiritual personalizado</p>
+            <a href="#contato" class="btn btn-primary mt-3" style="max-width: 300px;">
+                <i class="fas fa-hand-sparkles me-2"></i>Agendar Minha Consulta
+            </a>
+        </div>
+    </section>
+
+    <!-- Tarot Cards Background Elements -->
+    <img src="https://portaledicase.com/wp-content/uploads/2025/01/cartas-do-baralho-cigano-1-1024x683.jpg" alt="Tarot Card" class="tarot-card tarot-card-1">
+    <img src="https://static.mundoeducacao.uol.com.br/mundoeducacao/2022/03/visao-aproximada-da-lua.jpg" alt="Tarot Card" class="tarot-card tarot-card-2">
+    <img src="https://cdn.oantagonista.com/uploads/2025/04/Qual-a-fases-da-Lua-hoje-1-1024x576.jpg" alt="Tarot Card" class="tarot-card tarot-card-3">
+    <img src="https://cdn.oantagonista.com/uploads/2025/04/Qual-a-fases-da-Lua-hoje-1-1024x576.jpg" alt="Tarot Card" class="tarot-card tarot-card-4">
+
+    <!-- Services Section -->
+    <section id="servicos" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Meus Serviços Espirituais</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <i class="fas fa-star-and-crescent service-icon"></i>
+                            <h3>Leitura de Baralho Cigano</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>O Baralho Cigano é uma ferramenta ancestral que desvenda os segredos do coração e da alma. Com ele, posso revelar:</p>
+                            <ul>
+                                <li>Energias ao seu redor</li>
+                                <li>Situações amorosas e familiares</li>
+                                <li>Desafios e oportunidades profissionais</li>
+                                <li>Caminhos para o equilíbrio emocional</li>
+                            </ul>
+                            <p>Esta leitura é ideal para quem busca clareza sobre relacionamentos e questões emocionais.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <i class="fas fa-moon service-icon"></i>
+                            <h3>Leitura de Baralho Comum</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>O Baralho Comum, quando usado com intuição espiritual, pode revelar verdades profundas sobre seu caminho. Com esta leitura, descubra:</p>
+                            <ul>
+                                <li>Tendências futuras em diversas áreas da vida</li>
+                                <li>Blocos energéticos que estão te impedindo</li>
+                                <li>Oportunidades que estão por vir</li>
+                                <li>Conselhos práticos para decisões importantes</li>
+                            </ul>
+                            <p>Perfeito para quem precisa de orientação em decisões práticas do dia a dia.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-crown service-icon"></i>
+                            <h3>O Conselho da Espiritualidade</h3>
+                        </div>
+                        <div class="card-body text-center">
+                            <p>Cada consulta inclui um <strong>conselho espiritual personalizado</strong> baseado na leitura das cartas e na conexão com seu campo energético.</p>
+                            <p>Este conselho é um direcionamento claro sobre como lidar com as situações reveladas nas cartas, trazendo sabedoria ancestral para sua vida moderna.</p>
+                            <div class="mt-4">
+                                <span class="symbol">✦</span>
+                                <span class="symbol">☾</span>
+                                <span class="symbol">♡</span>
+                                <span class="symbol">☀</span>
+                                <span class="symbol">✦</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="sobre" class="py-5" style="background-color: rgba(108, 52, 131, 0.2);">
+        <div class="container">
+            <h2 class="section-title">Sobre Cavaleiro Cigano</h2>
+            
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-crystal-ball" style="font-size: 8rem; color: var(--dourado);"></i>
+                    </div>
+                    <h3>Cartomante Profissional</h3>
+                    <p>Especialista em Baralho Cigano e Comum</p>
+                </div>
+                
+                <div class="col-md-8">
+                    <p>Olá sou Jonathan Willian (Cavaleiro Cigano) Com anos de experiência no mundo da cartomancia, desenvolvi uma conexão espiritual profunda com as cartas, utilizando tanto o Baralho Cigano quanto o Baralho Comum para oferecer leituras precisas e conselhos valiosos.</p>
+                    
+                    <p>minha abordagem combina o conhecimento tradicional das cartas com uma intuição aguçada, Obtendo insights claros e práticos para meus clientes. Cada leitura é realizada com respeito, ética e total confidencialidade.</p>
+                    
+                    <p>Eu acredito que as cartas são ferramentas para desvendar não o futuro imutável, mas as possibilidades e energias que nos cercam, permitindo que tomemos decisões mais conscientes e alinhadas com nosso propósito espiritual.</p>
+                    
+                    <div class="mt-4">
+                        <a href="#contato" class="whatsapp-btn">
+                            <i class="fab fa-whatsapp fa-lg"></i> Entre em contato direto
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact/Form Section -->
+    <section id="contato" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Agende Sua Consulta de Cartomancia</h2>
+            <p class="text-center mb-5">Preencha o formulário abaixo com seus dados e a pergunta que deseja trazer para a leitura. Após o preenchimento, você será direcionado para o pagamento seguro.</p>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="form-container">
+                        <form id="consultaForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="nomeCompleto" class="form-label">Nome Completo *</label>
+                                    <input type="text" class="form-control" id="nomeCompleto" required>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="dataNascimento" class="form-label">Data de Nascimento *</label>
+                                    <input type="date" class="form-control" id="dataNascimento" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="telefone" class="form-label">Telefone/WhatsApp *</label>
+                                    <input type="tel" class="form-control" id="telefone" placeholder="(11) 99999-9999" required>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">E-mail *</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="tipoLeitura" class="form-label">Tipo de Leitura Desejada *</label>
+                                <select class="form-select" id="tipoLeitura" required>
+                                    <option value="" selected disabled>Selecione uma opção</option>
+                                    <option value="baralho-cigano">Leitura de Baralho Cigano</option>
+                                    <option value="baralho-comum">Leitura de Baralho Comum</option>
+                                    <option value="ambos">Ambas as Leituras (especial)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="pergunta" class="form-label">Sua Pergunta ou Motivo da Consulta *</label>
+                                <textarea class="form-control" id="pergunta" rows="4" placeholder="Descreva brevemente o motivo da sua consulta ou a pergunta que gostaria de trazer para a leitura das cartas..." required></textarea>
+                                <div class="form-text">Quanto mais detalhada sua pergunta, mais precisa será a leitura.</div>
+                            </div>
+                            
+                            <div class="mb-4 text-center">
+                                <div class="price-badge">
+                                    <i class="fas fa-gem me-2"></i>Valor: R$ 30,00
+                                </div>
+                                <p class="mt-2">Inclui leitura completa + conselho espiritual personalizado</p>
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-shopping-cart me-2"></i>Pagar e Agendar Consulta
+                                </button>
+                                <p class="disclaimer">Após enviar o formulário, você será direcionado para um pagamento seguro.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4 class="mb-4" style="color: var(--dourado);">
+                        <i class="fas fa-crystal-ball me-2"></i> Cavaleiro Cigano
+                    </h4>
+                    <p>Cartomante especializado em Baralho Cigano e Baralho Comum. Oferecendo leituras precisas e conselhos espirituais personalizados.</p>
+                </div>
+                
+                <div class="col-md-4">
+                    <h4 class="mb-4" style="color: var(--dourado);">Contato Direto</h4>
+                    <p><i class="fab fa-whatsapp me-2"></i> WhatsApp: (43) 999194766</p>
+                    <p><i class="fas fa-envelope me-2"></i> E-mail: jonathanwillian00321@gmail.com</p>
+                </div>
+                
+                <div class="col-md-4">
+                    <h4 class="mb-4" style="color: var(--dourado);">Aviso Legal</h4>
+                    <p class="small">As consultas de cartomancia têm caráter de entretenimento e orientação. Não substituem aconselhamento médico, psicológico, jurídico ou financeiro profissional.</p>
+                    <p class="small mt-3">&copy; 2025   Cavaleiro Cigano - Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de Confirmação -->
+    <div class="modal fade" id="confirmacaoModal" tabindex="-1" aria-labelledby="confirmacaoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background-color: var(--roxo-principal); color: var(--bege); border: 1px solid var(--dourado);">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmacaoModalLabel" style="color: var(--dourado);">
+                        <i class="fas fa-check-circle me-2"></i>Formulário Enviado!
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="fas fa-crystal-ball fa-4x mb-3" style="color: var(--dourado);"></i>
+                    <h4 class="mb-3">Obrigado por agendar sua consulta!</h4>
+                    <p>Seus dados foram registrados e em instantes você será redirecionado para o pagamento seguro via Kiwifi.</p>
+                    <p>Após a confirmação do pagamento, entrarei em contato para confirmar o horário da sua leitura.</p>
+                    <div class="mt-4">
+                        <p><strong>Resumo do seu pedido:</strong></p>
+                        <p id="resumoNome"></p>
+                        <p id="resumoLeitura"></p>
+                        <p><strong>Valor: R$ 30,00</strong></p>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('consultaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Coletar dados do formulário
+            const nome = document.getElementById('nomeCompleto').value;
+            const dataNasc = document.getElementById('dataNascimento').value;
+            const telefone = document.getElementById('telefone').value;
+            const email = document.getElementById('email').value;
+            const tipoLeitura = document.getElementById('tipoLeitura').value;
+            const pergunta = document.getElementById('pergunta').value;
+            
+            // Validar campos obrigatórios
+            if (!nome || !dataNasc || !telefone || !email || !tipoLeitura || !pergunta) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+            
+            // Validar telefone (pelo menos 10 dígitos)
+            const telefoneNumeros = telefone.replace(/\D/g, '');
+            if (telefoneNumeros.length < 10) {
+                alert('Por favor, insira um número de telefone válido.');
+                return;
+            }
+            
+            // Formatando a data para exibição
+            const dataObj = new Date(dataNasc);
+            if (isNaN(dataObj.getTime())) {
+                alert('Por favor, insira uma data de nascimento válida.');
+                return;
+            }
+            
+            const dataFormatada = dataObj.toLocaleDateString('pt-BR');
+            
+            // Determinar nome da leitura
+            let nomeLeitura = '';
+            switch(tipoLeitura) {
+                case 'baralho-cigano':
+                    nomeLeitura = 'Leitura de Baralho Cigano';
+                    break;
+                case 'baralho-comum':
+                    nomeLeitura = 'Leitura de Baralho Comum';
+                    break;
+                case 'ambos':
+                    nomeLeitura = 'Ambas as Leituras (especial)';
+                    break;
+                default:
+                    nomeLeitura = tipoLeitura;
+            }
+            
+            // Preparar mensagem para WhatsApp
+            const mensagem = `*NOVA CONSULTA - CAVALEIRO CIGANO*%0A%0A*👤 CLIENTE:* ${nome}%0A*📅 NASCIMENTO:* ${dataFormatada}%0A*📱 TELEFONE:* ${telefone}%0A*📧 E-MAIL:* ${email}%0A*🔮 SERVIÇO:* ${nomeLeitura}%0A*💰 VALOR:* R$ 30,00%0A%0A*❓ PERGUNTA/QUESTÃO:*%0A${pergunta.replace(/\n/g, '%0A')}%0A%0A*✅ Aguardo orientações sobre o pagamento e agendamento!*`;
+            
+            // Armazenar dados no localStorage (para backup)
+            const dadosCliente = {
+                nome, 
+                dataNasc, 
+                telefone: telefoneNumeros, 
+                email, 
+                tipoLeitura,
+                nomeLeitura,
+                pergunta,
+                dataEnvio: new Date().toISOString()
+            };
+            
+            localStorage.setItem('clienteCartomancia', JSON.stringify(dadosCliente));
+            
+            // Atualizar resumo no modal
+            document.getElementById('resumoNome').textContent = `Cliente: ${nome}`;
+            document.getElementById('resumoLeitura').textContent = `Serviço: ${nomeLeitura}`;
+            document.getElementById('resumoTelefone').textContent = `Telefone: ${telefone}`;
+            document.getElementById('resumoValor').textContent = `Valor: R$ 30,00`;
+            
+            // Mostrar modal de confirmação
+            const modal = new bootstrap.Modal(document.getElementById('confirmacaoModal'));
+            modal.show();
+            
+            // ENVIAR PARA WHATSAPP
+            const numeroWhatsApp = '5543999194766';
+            const whatsappUrl = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+            
+            // Abrir WhatsApp após 2 segundos
+            setTimeout(() => {
+                // Abrir em nova janela
+                window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+                
+                // Limpar formulário
+                document.getElementById('consultaForm').reset();
+            }, 2000);
+        });
+        
+        // Formatar telefone automaticamente
+        document.getElementById('telefone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length > 11) {
+                value = value.substring(0, 11);
+            }
+            
+            if (value.length > 10) {
+                // Formato para celular com 9º dígito: (43) 99999-9999
+                value = value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            } else if (value.length > 6) {
+                value = value.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+            } else if (value.length > 2) {
+                value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+            } else if (value.length > 0) {
+                value = value.replace(/^(\d*)/, '($1');
+            }
+            
+            e.target.value = value;
+        });
+        
+        // Validar data de nascimento (não pode ser data futura)
+        document.getElementById('dataNascimento').addEventListener('change', function(e) {
+            const dataSelecionada = new Date(this.value);
+            const hoje = new Date();
+            
+            if (dataSelecionada > hoje) {
+                alert('A data de nascimento não pode ser uma data futura.');
+                this.value = '';
+            }
+        });
+        
+        // Smooth scroll para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Modal de Confirmação -->
+    <div class="modal fade" id="confirmacaoModal" tabindex="-1" aria-labelledby="confirmacaoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background-color: var(--roxo-principal); color: var(--bege); border: 1px solid var(--dourado);">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmacaoModalLabel" style="color: var(--dourado);">
+                        <i class="fas fa-check-circle me-2"></i>Consulta Solicitada!
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="fab fa-whatsapp fa-4x mb-3" style="color: #25D366;"></i>
+                    <h4 class="mb-3">Sua consulta foi registrada!</h4>
+                    <p>Em instantes você será redirecionado para o WhatsApp para finalizar o agendamento.</p>
+                    
+                    <div class="alert alert-success mt-3" style="background-color: rgba(37, 211, 102, 0.1); border-color: #25D366; color: var(--bege);">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Próximo passo:</strong> Vou receber seus dados no WhatsApp e entrarei em contato para combinar o pagamento e agendar sua leitura.
+                    </div>
+                    
+                    <div class="mt-4 p-3" style="background-color: rgba(0,0,0,0.3); border-radius: 10px;">
+                        <p><strong>Resumo da sua solicitação:</strong></p>
+                        <p id="resumoNome"></p>
+                        <p id="resumoLeitura"></p>
+                        <p id="resumoTelefone"></p>
+                        <p id="resumoValor" style="color: var(--dourado); font-weight: bold;"></p>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <p><small>Se o WhatsApp não abrir automaticamente:</small></p>
+                        <a href="https://wa.me/5543999194766" class="whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp fa-lg"></i> Clique aqui para abrir o WhatsApp
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                        <i class="fas fa-thumbs-up me-2"></i>Entendido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
