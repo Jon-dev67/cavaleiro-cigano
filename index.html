@@ -265,6 +265,15 @@
             color: #aaa;
         }
         
+        .alert-message {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 10000;
+            max-width: 350px;
+            display: none;
+        }
+        
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2.5rem;
@@ -280,6 +289,13 @@
             
             .form-container {
                 padding: 20px;
+            }
+            
+            .alert-message {
+                top: 80px;
+                left: 20px;
+                right: 20px;
+                max-width: none;
             }
         }
     </style>
@@ -313,6 +329,17 @@
             </div>
         </div>
     </nav>
+
+    <!-- Alert Message -->
+    <div class="alert alert-success alert-message" role="alert" id="successAlert">
+        <div class="d-flex align-items-center">
+            <i class="fab fa-whatsapp fa-2x me-3" style="color: #25D366;"></i>
+            <div>
+                <h5 class="alert-heading mb-1">Redirecionando para o WhatsApp...</h5>
+                <p class="mb-0">Se não abrir automaticamente, <a href="#" id="whatsappLink" class="alert-link">clique aqui</a></p>
+            </div>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section id="inicio" class="hero-section">
@@ -429,7 +456,7 @@
                     <p>Eu acredito que as cartas são ferramentas para desvendar não o futuro imutável, mas as possibilidades e energias que nos cercam, permitindo que tomemos decisões mais conscientes e alinhadas com nosso propósito espiritual.</p>
                     
                     <div class="mt-4">
-                        <a href="https://wa.me/5543999194766" class="whatsapp-btn" target="_blank">
+                        <a href="https://wa.me/5543999194766?text=Olá! Gostaria de mais informações sobre a consulta de cartomancia." class="whatsapp-btn" target="_blank">
                             <i class="fab fa-whatsapp fa-lg"></i> Falar diretamente pelo WhatsApp
                         </a>
                     </div>
@@ -463,7 +490,7 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="telefone" class="form-label">Telefone/WhatsApp *</label>
-                                    <input type="tel" class="form-control" id="telefone" placeholder="(11) 99999-9999" required>
+                                    <input type="tel" class="form-control" id="telefone" placeholder="(43) 99919-4766" required>
                                 </div>
                                 
                                 <div class="col-md-6 mb-3">
@@ -524,7 +551,7 @@
                     <h4 class="mb-4" style="color: var(--dourado);">Contato Direto</h4>
                     <p><i class="fab fa-whatsapp me-2"></i> WhatsApp: (43) 99919-4766</p>
                     <p><i class="fas fa-envelope me-2"></i> E-mail: jonathanwillian00321@gmail.com</p>
-                    <a href="https://wa.me/5543999194766" class="whatsapp-btn mt-2" target="_blank">
+                    <a href="https://wa.me/5543999194766?text=Olá! Gostaria de mais informações sobre a consulta de cartomancia." class="whatsapp-btn mt-2" target="_blank">
                         <i class="fab fa-whatsapp fa-lg"></i> Falar no WhatsApp
                     </a>
                 </div>
@@ -539,6 +566,9 @@
     </footer>
 
     <script>
+        // Variável global para armazenar o link do WhatsApp
+        let whatsappLinkGlobal = '';
+        
         document.getElementById('consultaForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -552,21 +582,21 @@
             
             // Validar campos obrigatórios
             if (!nome || !dataNasc || !telefone || !email || !tipoLeitura || !pergunta) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
+                showAlert('Por favor, preencha todos os campos obrigatórios.', 'danger');
                 return;
             }
             
             // Validar telefone (pelo menos 10 dígitos)
             const telefoneNumeros = telefone.replace(/\D/g, '');
             if (telefoneNumeros.length < 10) {
-                alert('Por favor, insira um número de telefone válido.');
+                showAlert('Por favor, insira um número de telefone válido.', 'danger');
                 return;
             }
             
             // Formatando a data para exibição
             const dataObj = new Date(dataNasc);
             if (isNaN(dataObj.getTime())) {
-                alert('Por favor, insira uma data de nascimento válida.');
+                showAlert('Por favor, insira uma data de nascimento válida.', 'danger');
                 return;
             }
             
@@ -588,14 +618,14 @@
                     nomeLeitura = tipoLeitura;
             }
             
-            // Preparar mensagem para WhatsApp
-            const mensagem = `*NOVA CONSULTA - CAVALEIRO CIGANO*%0A%0A*Olá, sou ${nome}!*%0A%0AGostaria de agendar uma consulta de cartomancia.%0A%0A*📋 DADOS PESSOAIS:*%0A• *Nome:* ${nome}%0A• *Data de Nascimento:* ${dataFormatada}%0A• *Telefone:* ${telefone}%0A• *E-mail:* ${email}%0A%0A*🔮 SERVIÇO SOLICITADO:*%0A• ${nomeLeitura}%0A%0A*💰 VALOR:* R$ 30,00%0A%0A*❓ PERGUNTA/QUESTÃO:*%0A${pergunta.replace(/\n/g, '%0A')}%0A%0A*✅ Aguardo as instruções para pagamento e agendamento!*`;
+            // Preparar mensagem para WhatsApp - URL simplificada para funcionar melhor em dispositivos móveis
+            const mensagem = `Olá, sou ${nome}! Gostaria de agendar uma consulta de cartomancia.%0A%0ADados:%0A• Nascimento: ${dataFormatada}%0A• Telefone: ${telefone}%0A• E-mail: ${email}%0A• Serviço: ${nomeLeitura}%0A• Valor: R$ 30,00%0A%0APergunta: ${pergunta.substring(0, 200)}${pergunta.length > 200 ? '...' : ''}`;
             
-            // Número do WhatsApp
+            // Criar link do WhatsApp
             const numeroWhatsApp = '5543999194766';
-            const whatsappUrl = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+            whatsappLinkGlobal = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
             
-            // Armazenar dados no localStorage (para backup)
+            // Armazenar dados no localStorage
             const dadosCliente = {
                 nome, 
                 dataNasc, 
@@ -609,17 +639,82 @@
             
             localStorage.setItem('clienteCartomancia', JSON.stringify(dadosCliente));
             
-            // Mostrar alerta de sucesso
-            alert('Formulário enviado com sucesso! Você será redirecionado para o WhatsApp em instantes.');
+            // Atualizar link no alerta
+            document.getElementById('whatsappLink').href = whatsappLinkGlobal;
             
-            // Redirecionar para WhatsApp após 1 segundo
+            // Mostrar alerta de sucesso
+            showAlert('Redirecionando para o WhatsApp...', 'success');
+            
+            // Abrir WhatsApp depois de 1.5 segundos (tempo para ver o alerta)
             setTimeout(() => {
-                window.open(whatsappUrl, '_blank');
-                
-                // Limpar formulário
+                openWhatsApp(whatsappLinkGlobal);
+            }, 1500);
+            
+            // Limpar formulário depois de 2 segundos
+            setTimeout(() => {
                 document.getElementById('consultaForm').reset();
-            }, 1000);
+            }, 2000);
         });
+        
+        // Função para abrir o WhatsApp
+        function openWhatsApp(url) {
+            // Primeiro tentamos abrir em uma nova aba/aba atual
+            const newWindow = window.open(url, '_blank');
+            
+            // Se for bloqueado (popup blocker), mostramos instruções
+            if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+                showAlert('Pop-up bloqueado! Por favor, clique no link abaixo para abrir o WhatsApp.', 'warning');
+                document.getElementById('whatsappLink').innerHTML = '<strong>Clique aqui para abrir o WhatsApp</strong>';
+            }
+        }
+        
+        // Função para mostrar alertas personalizados
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('successAlert');
+            
+            // Alterar cor e ícone conforme o tipo
+            if (type === 'success') {
+                alertDiv.className = 'alert alert-success alert-message';
+                alertDiv.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <i class="fab fa-whatsapp fa-2x me-3" style="color: #25D366;"></i>
+                        <div>
+                            <h5 class="alert-heading mb-1">${message}</h5>
+                            <p class="mb-0">Se não abrir automaticamente, <a href="${whatsappLinkGlobal}" target="_blank" class="alert-link">clique aqui</a></p>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'danger') {
+                alertDiv.className = 'alert alert-danger alert-message';
+                alertDiv.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+                        <div>
+                            <h5 class="alert-heading mb-1">${message}</h5>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'warning') {
+                alertDiv.className = 'alert alert-warning alert-message';
+                alertDiv.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-info-circle fa-2x me-3"></i>
+                        <div>
+                            <h5 class="alert-heading mb-1">${message}</h5>
+                            <p class="mb-0"><a href="${whatsappLinkGlobal}" target="_blank" class="alert-link">Clique aqui para abrir o WhatsApp</a></p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Mostrar o alerta
+            alertDiv.style.display = 'block';
+            
+            // Esconder o alerta após 5 segundos
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+            }, 5000);
+        }
         
         // Formatar telefone automaticamente
         document.getElementById('telefone').addEventListener('input', function(e) {
@@ -649,7 +744,7 @@
             const hoje = new Date();
             
             if (dataSelecionada > hoje) {
-                alert('A data de nascimento não pode ser uma data futura.');
+                showAlert('A data de nascimento não pode ser uma data futura.', 'warning');
                 this.value = '';
             }
         });
