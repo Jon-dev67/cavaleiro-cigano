@@ -618,12 +618,12 @@
                     nomeLeitura = tipoLeitura;
             }
             
-            // Preparar mensagem para WhatsApp - URL simplificada para funcionar melhor em dispositivos móveis
-            const mensagem = `Olá, sou ${nome}! Gostaria de agendar uma consulta de cartomancia.%0A%0ADados:%0A• Nascimento: ${dataFormatada}%0A• Telefone: ${telefone}%0A• E-mail: ${email}%0A• Serviço: ${nomeLeitura}%0A• Valor: R$ 30,00%0A%0APergunta: ${pergunta.substring(0, 200)}${pergunta.length > 200 ? '...' : ''}`;
+            // Preparar mensagem BEM FORMATADA para WhatsApp
+            const mensagem = `*✨ NOVA SOLICITAÇÃO DE CONSULTA ✨*%0A%0A*👤 Cliente:* ${nome}%0A*📅 Data de Nascimento:* ${dataFormatada}%0A*📱 WhatsApp:* ${telefone}%0A*📧 E-mail:* ${email}%0A%0A*🔮 Serviço Solicitado:*%0A${nomeLeitura}%0A%0A*💰 Valor da Consulta:*%0AR$ 30,00%0A%0A*❓ Motivo da Consulta/Pergunta:*%0A${encodeURIComponent(pergunta)}%0A%0A*✅ Aguardo as instruções para pagamento e agendamento!*%0A%0A_Esta mensagem foi enviada através do site Cavaleiro Cigano_`;
             
             // Criar link do WhatsApp
             const numeroWhatsApp = '5543999194766';
-            whatsappLinkGlobal = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+            whatsappLinkGlobal = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
             
             // Armazenar dados no localStorage
             const dadosCliente = {
